@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+<!--From https://codepen.io/frytyler/pen/EGdtg-->
+
+<head>
+  <meta charset="UTF-8">
+  <title>Diabetes Predictor</title>
+  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+  <style>
+    @import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+    .btn {
+      display: inline-block;
+      *display: inline;
+      *zoom: 1;
+      padding: 4px 10px 4px;
+      margin-bottom: 0;
+      font-size: 13px;
+      line-height: 18px;
+      color: #333333;
+      text-align: center;
+      text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+      vertical-align: middle;
+      background-color: #f5f5f5;
+      background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
+      background-image: -ms-linear-gradient(top, #ffffff, #e6e6e6);
+      background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));
+      background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
+      background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
+      background-image: linear-gradient(top, #ffffff, #e6e6e6);
+      background-repeat: repeat-x;
+      filter: progid:dximagetransform.microsoft.gradient(startColorstr=#ffffff, endColorstr=#e6e6e6, GradientType=0);
+      border-color: #e6e6e6 #e6e6e6 #e6e6e6;
+      border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+      border: 1px solid #e6e6e6;
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      border-radius: 4px;
+      -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+      -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+      cursor: pointer;
+      *margin-left: .3em;
+    }
+
+    .btn:hover,
+    .btn:active,
+    .btn.active,
+    .btn.disabled,
+    .btn[disabled] {
+      background-color: #e6e6e6;
+    }
+
+    .btn-large {
+      padding: 9px 14px;
+      font-size: 15px;
+      line-height: normal;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+    }
+
+    .btn:hover {
+      color: #333333;
+      text-decoration: none;
+      background-color: #e6e6e6;
+      background-position: 0 -15px;
+      -webkit-transition: background-position 0.1s linear;
+      -moz-transition: background-position 0.1s linear;
+      -ms-transition: background-position 0.1s linear;
+      -o-transition: background-position 0.1s linear;
+      transition: background-position 0.1s linear;
+    }
+
+    .btn-primary,
+    .btn-primary:hover {
+      text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+      color: #ffffff;
+    }
+
+    .btn-primary.active {
+      color: rgba(255, 255, 255, 0.75);
+    }
+
+    .btn-primary {
+      background-color: #4a77d4;
+      background-image: -moz-linear-gradient(top, #6eb6de, #4a77d4);
+      background-image: -ms-linear-gradient(top, #6eb6de, #4a77d4);
+      background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#6eb6de), to(#4a77d4));
+      background-image: -webkit-linear-gradient(top, #6eb6de, #4a77d4);
+      background-image: -o-linear-gradient(top, #6eb6de, #4a77d4);
+      background-image: linear-gradient(top, #6eb6de, #4a77d4);
+      background-repeat: repeat-x;
+      filter: progid:dximagetransform.microsoft.gradient(startColorstr=#6eb6de, endColorstr=#4a77d4, GradientType=0);
+      border: 1px solid #3762bc;
+      text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    .btn-primary:hover,
+    .btn-primary:active,
+    .btn-primary.active,
+    .btn-primary.disabled,
+    .btn-primary[disabled] {
+      filter: none;
+      background-color: #4a77d4;
+    }
+
+    .btn-block {
+      width: 100%;
+      display: block;
+    }
+
+    body {
+      width: 100%;
+      height: auto;
+      font-family: 'Open Sans', sans-serif;
+      color: #fff;
+      font-size: 18px;
+      text-align: center;
+      letter-spacing: 1.2px;
+      background-image: url("../static/wall.jpg");
+
+
+
+    }
+
+    .login {
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 50px;
+
+    }
+
+    h1 {
+      text-align: center;
+      color: white;
+      text-transform: uppercase;
+      font-size: 40px;
+      text-shadow: 2px 2px 4px black;
+      font-family: 'Times New Roman', Times, serif;
+      margin-bottom: 5px;
+    }
+
+    .sub-header {
+      text-align: center;
+      color: #e0e0e0;
+      font-size: 20px;
+      font-family: 'Times New Roman', Times, serif;
+      text-shadow: 1px 1px 2px black;
+      margin-top: 0;
+      margin-bottom: 30px;
+      letter-spacing: 1px;
+    }
+
+    @keyframes bounceIn {
+      0% {
+        transform: scale(0.1);
+        opacity: 0;
+      }
+
+      60% {
+        transform: scale(1.2);
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+
+    input {
+      width: 500px;
+      margin-bottom: 10px;
+      background: rgba(0, 0, 0, 0.7);
+      border: none;
+      outline: none;
+      padding: 15px;
+      font-size: 13px;
+      color: #fff;
+      text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+      border: 3px solid greenyellow;
+      border-radius: 20px;
+      box-shadow: inset 0 -5px 45px rgba(100, 100, 100, 0.2), 0 1px 1px rgba(255, 255, 255, 0.2);
+      -webkit-transition: box-shadow .5s ease;
+      -moz-transition: box-shadow .5s ease;
+      -o-transition: box-shadow .5s ease;
+      -ms-transition: box-shadow .5s ease;
+      transition: box-shadow .5s ease;
+
+    }
+
+    input:hover {
+      background: rgba(0, 0, 0, 1);
+      font-size: 15px;
+      border: #670d10 5px solid;
+    }
+
+    input:focus {
+      box-shadow: inset 0 -5px 45px rgba(100, 100, 100, 0.4), 0 1px 1px rgba(255, 255, 255, 0.2);
+    }
+
+    footer {
+      margin-top: 50px;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.8);
+      border-top: 2px solid greenyellow;
+      border-radius: 10px 10px 0 0;
+      font-size: 14px;
+      color: #ccc;
+    }
+
+    footer p {
+      margin: 5px 0;
+    }
+
+    .social-links {
+      margin-top: 10px;
+    }
+
+    .footer-link {
+      color: greenyellow;
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-flex;
+      align-items: center;
+      margin: 0 10px;
+      transition: color 0.3s ease;
+    }
+
+    .footer-link:hover {
+      color: #fff;
+    }
+
+    .footer-link svg {
+      fill: currentColor;
+      transition: transform 0.3s ease;
+    }
+
+    .footer-link:hover svg {
+      transform: scale(1.1);
+    }
+
+    .separator {
+      color: #555;
+    }
+  </style>
+
+
+
+</head>
+
+
+
+
+
+<body>
+  <h1> Diabetes Predictor </h1>
+  <div class="sub-header">PLEASE ENTER ALL THE VALUES WITH UTMOST CARE</div>
+  <div class="login">
+    <form action="{{ url_for('predict')}}" method="post">
+      <input class="form-input" type="text" name="pregnancies" placeholder="Number of Pregnancies eg. 0"><br>
+      <input class="form-input" type="text" name="glucose" placeholder="Glucose (mg/dL) eg. 80"><br>
+      <input class="form-input" type="text" name="bloodpressure" placeholder="Blood Pressure (mmHg) eg. 80"><br>
+      <input class="form-input" type="text" name="skinthickness" placeholder="Skin Thickness (mm) eg. 20"><br>
+      <input class="form-input" type="text" name="insulin" placeholder="Insulin Level (IU/mL) eg. 80"><br>
+      <input class="form-input" type="text" name="bmi" placeholder="Body Mass Index (kg/m²) eg. 23.1"><br>
+      <input class="form-input" type="text" name="dpf" placeholder="Diabetes Pedigree Function eg. 0.52"><br>
+      <input class="form-input" type="text" name="age" placeholder="Age (years) eg. 34"><br>
+      <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
+    </form>
+    <br>
+    <br>
+    {% if prediction_text %}
+    <div style="color: #adff2f; font-size: 20px; font-weight: bold; margin-top: 10px;">{{ prediction_text }}</div>
+    {% endif %}
+  </div>
+  <footer>
+    <p>Created by <strong>Keshav Kapil</strong></p>
+    <div class="social-links">
+      <a href="https://github.com/keshavkapill" target="_blank" class="footer-link">
+        keshavkapill
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-github"
+          viewBox="0 0 16 16" style="vertical-align: middle; margin-left: 5px;">
+          <path
+            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8" />
+        </svg>
+      </a>
+      <span class="separator">|</span>
+      <a href="https://www.linkedin.com/in/keshavkapil15/" target="_blank" class="footer-link">
+        keshavkapil15
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-linkedin"
+          viewBox="0 0 16 16" style="vertical-align: middle; margin-left: 5px;">
+          <path
+            d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z" />
+        </svg>
+      </a>
+    </div>
+  </footer>
+</body>
+
+</html>
+
+
+
+
+
+</html>
